@@ -1,3 +1,5 @@
+use vm::VM;
+
 fn main() {
-    println!("Hello, world!");
+    println!("hello");
 }

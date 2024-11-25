@@ -6,7 +6,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-
-[lib]
-name = "cli"
-path = "src/lib.rs"
+vm = { path = "../vm" }
+parser = { path = "../parser" }
+assembler = { path = "../assembler" }
+repl = { path = "../repl" }

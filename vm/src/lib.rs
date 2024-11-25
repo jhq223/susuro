@@ -1,14 +1,11 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+#![allow(dead_code)]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+mod opcode;
+mod instruction;
+pub struct VM {
+    registers: [i32; 32],
+    pc: usize,
+    program: Vec<u8>,
+    remainder: usize,
+    equal_flag: bool,
 }
