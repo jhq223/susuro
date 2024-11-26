@@ -4,7 +4,8 @@ use crate::Rule;
 
 #[derive(Debug, Error, PartialEq)]
 pub enum ParseError {
-    #[error("Parse failed at rule: {0:?}")] PestError(#[from] pest::error::Error<Rule>),
+    #[error("Parse failed at rule: {0:?}")]
+    PestError(#[from] pest::error::Error<Rule>),
 
     #[error("Unexpected end of input")]
     UnexpectedEndOfInput,
@@ -12,7 +13,8 @@ pub enum ParseError {
     #[error("Unknown instruction encountered")]
     UnknownInstruction,
 
-    #[error("Custom error: {0}")] Custom(String),
+    #[error("Custom error: {0}")]
+    Custom(String),
 }
 
 impl ParseError {

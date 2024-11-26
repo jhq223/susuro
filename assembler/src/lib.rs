@@ -12,8 +12,7 @@ use crate::error::ParseError;
 pub struct AssemblyParser;
 
 macro_rules! parse_instruction {
-    ($parser:expr, $opcode:ident, $pairs:expr) => {
-        {
+    ($parser:expr, $opcode:ident, $pairs:expr) => {{
         let mut operands = Vec::new();
         for pair in $pairs.into_inner() {
             match pair.as_rule() {
@@ -32,9 +31,8 @@ macro_rules! parse_instruction {
                 _ => {}
             }
         }
-        Instruction::new(Opcode::$opcode,operands) 
-    }
-    };
+        Instruction::new(Opcode::$opcode, operands)
+    }};
 }
 
 impl AssemblyParser {
@@ -50,6 +48,20 @@ impl AssemblyParser {
         let instruction = match pairs.as_rule() {
             Rule::load => parse_instruction!(AssemblerParser, LOAD, pairs),
             Rule::add => parse_instruction!(AssemblerParser, ADD, pairs),
+            Rule::sub => parse_instruction!(AssemblerParser, SUB, pairs),
+            Rule::mul => parse_instruction!(AssemblerParser, MUL, pairs),
+            Rule::div => parse_instruction!(AssemblerParser, DIV, pairs),
+            Rule::halt => parse_instruction!(AssemblerParser, HLT, pairs),
+            Rule::jmp => parse_instruction!(AssemblerParser, JMP, pairs),
+            Rule::jmpf => parse_instruction!(AssemblerParser, JMPF, pairs),
+            Rule::jmpb => parse_instruction!(AssemblerParser, JMPB, pairs),
+            Rule::eq => parse_instruction!(AssemblerParser, EQ, pairs),
+            Rule::neq => parse_instruction!(AssemblerParser, NEQ, pairs),
+            Rule::gte => parse_instruction!(AssemblerParser, GTE, pairs),
+            Rule::lte => parse_instruction!(AssemblerParser, LTE, pairs),
+            Rule::gt => parse_instruction!(AssemblerParser, GT, pairs),
+            Rule::lt => parse_instruction!(AssemblerParser, LT, pairs),
+            Rule::jmpe => parse_instruction!(AssemblerParser, JMPE, pairs),
             _ => {
                 return Err(ParseError::UnknownInstruction);
             }
@@ -62,14 +74,23 @@ impl AssemblyParser {
 #[cfg(test)]
 mod tests {
     use vm::instruction::Instruction;
+    use vm::opcode::Opcode;
 
     use crate::AssemblyParser;
 
     #[test]
     fn test_load() {
         assert_eq!(
-            Ok(Instruction::new(vm::opcode::Opcode::LOAD, vec![0, 1, 244])),
+            Ok(Instruction::new(Opcode::LOAD, vec![0, 1, 244])),
             AssemblyParser::parse_instruction("LOAD $0 #500")
+        );
+    }
+
+    #[test]
+    fn test_add() {
+        assert_eq!(
+            Ok(Instruction::new(Opcode::ADD, vec![0, 1, 2])),
+            AssemblyParser::parse_instruction("ADD $0 $1 $2")
         );
     }
 }

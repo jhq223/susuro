@@ -1,6 +1,6 @@
-use std::{ io, io::Write };
-use vm::VM;
 use assembler::AssemblyParser;
+use std::{io, io::Write};
+use vm::VM;
 
 pub struct REPL {
     command_buffer: Vec<String>,
@@ -9,7 +9,10 @@ pub struct REPL {
 
 impl REPL {
     pub fn new() -> Self {
-        Self { command_buffer: vec![], vm: VM::new() }
+        Self {
+            command_buffer: vec![],
+            vm: VM::new(),
+        }
     }
 }
 
@@ -18,9 +21,11 @@ impl REPL {
         println!("Welcome to Susuro!");
         loop {
             print!(">>> ");
-            let mut command = String::new();
             io::stdout().flush().expect("Unable to flush stdout");
-            io::stdin().read_line(&mut command).expect("Unable to read line from user");
+            let mut command = String::new();
+            io::stdin()
+                .read_line(&mut command)
+                .expect("Unable to read line from user");
             let command = command.trim();
             self.command_buffer.push(command.to_string());
 
@@ -35,12 +40,18 @@ impl REPL {
                 "program" => {
                     println!("{:?}", self.vm.program);
                 }
+                "history" => {
+                    println!("{:#?}", self.command_buffer);
+                }
+                "clear" => {
+                    self.command_buffer.clear();
+                }
                 _ => {
                     if let Ok(instruction) = AssemblyParser::parse_instruction(command) {
                         self.vm.add_bytes(&instruction.to_bytes());
                         self.vm.run_once();
                     } else {
-                        println!("无效输入");
+                        println!("Invalid input");
                     }
                 }
             }
