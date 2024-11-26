@@ -1,0 +1,21 @@
+instruction = { load | add | sub | mul | div | jmp | halt | eq | neq | gte | lte | lt | gt | jmpe }
+
+load = { "LOAD" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ number }
+add  = { "ADD" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+sub  = { "SUB" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+mul  = { "MUL" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+div  = { "DIV" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+jmp  = { "JMP" ~ WHITE_SPACE ~ register }
+halt = { "HLT" }
+eq   = { "EQ" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+neq  = { "NEQ" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+gte  = { "GTE" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+lte  = { "LTE" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+lt   = { "LT" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+gt   = { "GT" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
+jmpe = { "JMPE" ~ WHITE_SPACE ~ register }
+
+register = { "$" ~ ASCII_DIGIT+ }
+number   = { "#" ~ ASCII_DIGIT+ }
+
+comment = _{ "//" ~ (!"\n" ~ ANY)* }

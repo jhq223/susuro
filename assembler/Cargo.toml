@@ -6,7 +6,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+vm = { path = "../vm" }
 
-[lib]
-name = "assembler"
-path = "src/lib.rs"
+thiserror = "1.0"
+pest = "2.7.14"
+pest_derive = "2.7.14"

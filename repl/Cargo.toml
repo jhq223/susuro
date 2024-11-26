@@ -6,7 +6,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-
-[lib]
-name = "repl"
-path = "src/lib.rs"
+vm = { path = "../vm" }
+assembler = { path = "../assembler" }

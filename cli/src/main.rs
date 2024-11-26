@@ -1,3 +1,6 @@
+use repl::REPL;
+
 fn main() {
-    println!("hello");
+    let mut repl = REPL::new();
+    repl.run_loop();
 }

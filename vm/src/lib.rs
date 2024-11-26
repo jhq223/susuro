@@ -1,14 +1,14 @@
 #![allow(dead_code)]
 
-mod instruction;
-mod opcode;
+pub mod instruction;
+pub mod opcode;
 
 use opcode::Opcode;
 
 pub struct VM {
-    registers: [i32; 32],
+    pub registers: [i32; 32],
     pc: usize,
-    program: Vec<u8>,
+    pub program: Vec<u8>,
     remainder: usize,
     equal_flag: bool,
 }
@@ -41,6 +41,12 @@ impl VM {
     pub fn decode_opcode(&mut self) -> Opcode {
         let opcode = Opcode::from(self.next_8_bits());
         opcode
+    }
+}
+
+impl VM {
+    pub fn add_bytes(&mut self, bytes: &[u8; 4]) {
+        self.program.extend_from_slice(bytes);
     }
 }
 

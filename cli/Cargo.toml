@@ -6,10 +6,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-vm = { path = "../vm" }
 # parser = { path = "../parser" }
 # assembler = { path = "../assembler" }
-# repl = { path = "../repl" }
+repl = { path = "../repl" }
 
 [[bin]]
 name = "susuro"
