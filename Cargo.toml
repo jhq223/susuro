@@ -1,20 +1,10 @@
 cargo-features = ["edition2024"]
 
-[package]
+[workspace]
+members = ["cli", "vm", "parser", "assembler", "repl"]
+resolver = "3"
+
+[workspace.package]
 name = "susuro"
 version = "0.1.0"
 edition = "2024"
-
-[workspace]
-members = ["cli", "vm", "parser", "assembler", "repl", "cli"]
-
-[workspace.dependencies]
-
-[[bin]]
-bench = false
-path = "cli/src/main.rs"
-name = "susuro"
-
-[[test]]
-name = "integration"
-path = "tests/tests.rs"
