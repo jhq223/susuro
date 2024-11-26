@@ -106,3 +106,14 @@ impl From<u8> for Opcode {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Opcode;
+
+    #[test]
+    fn test_igl() {
+        let opcode = Opcode::from(50);
+        assert_eq!(Opcode::IGL, opcode);
+    }
+}
