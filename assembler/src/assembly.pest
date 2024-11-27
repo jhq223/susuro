@@ -1,4 +1,4 @@
-instruction = { load | add | sub | mul | div | halt | jmp | jmpf | jmpb | eq | neq | gte | lte | lt | gt | jmpe }
+instruction = { label? ~ (load | add | sub | mul | div | halt | jmp | jmpf | jmpb | eq | neq | gte | lte | lt | gt | jmpe) }
 
 load = { "LOAD" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ number }
 add  = { "ADD" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
@@ -16,6 +16,10 @@ lte  = { "LTE" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
 lt   = { "LT" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
 gt   = { "GT" ~ WHITE_SPACE ~ register ~ WHITE_SPACE ~ register }
 jmpe = { "JMPE" ~ WHITE_SPACE ~ register }
+prts = { "PRTS" ~ WHITE_SPACE ~ label_t }
 
-register = { "$" ~ ASCII_DIGIT+ }
-number   = { "#" ~ ASCII_DIGIT+ }
+register   = { "$" ~ ASCII_DIGIT+ }
+number     = { "#" ~ ASCII_DIGIT+ }
+identifier = { ASCII_ALPHA+ }
+label      = { identifier ~ ":" ~ WHITE_SPACE }
+label_t    = { "@" ~ identifier }

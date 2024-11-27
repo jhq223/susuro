@@ -1,5 +1,5 @@
-use assembler::AssemblyParser;
-use std::{io, io::Write};
+// use assembler::AssemblyParser;
+use std::{ io, io::Write };
 use vm::VM;
 
 pub struct REPL {
@@ -23,9 +23,7 @@ impl REPL {
             print!(">>> ");
             io::stdout().flush().expect("Unable to flush stdout");
             let mut command = String::new();
-            io::stdin()
-                .read_line(&mut command)
-                .expect("Unable to read line from user");
+            io::stdin().read_line(&mut command).expect("Unable to read line from user");
             let command = command.trim();
             self.command_buffer.push(command.to_string());
 
@@ -47,12 +45,12 @@ impl REPL {
                     self.command_buffer.clear();
                 }
                 _ => {
-                    if let Ok(instruction) = AssemblyParser::parse_instruction(command) {
-                        self.vm.add_bytes(&instruction.to_bytes());
-                        self.vm.run_once();
-                    } else {
-                        println!("Invalid input");
-                    }
+                    // if let Ok(instruction) = AssemblyParser::parse_instruction(command) {
+                    //     self.vm.add_bytes(&instruction.to_bytes());
+                    //     self.vm.run_once();
+                    // } else {
+                    //     println!("Invalid input");
+                    // }
                 }
             }
         }

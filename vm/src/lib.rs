@@ -9,6 +9,7 @@ pub struct VM {
     pub registers: [i32; 32],
     pc: usize,
     pub program: Vec<u8>,
+    heap: Vec<u8>,
     remainder: usize,
     equal_flag: bool,
 }
@@ -19,6 +20,7 @@ impl VM {
             registers: [0; 32],
             pc: 0,
             program: vec![],
+            heap: vec![],
             remainder: 0,
             equal_flag: false,
         }
@@ -157,6 +159,12 @@ impl VM {
                     self.pc = target as usize;
                 }
             }
+            Opcode::ALOC => {
+                let bytes = self.registers[self.next_8_bits() as usize];
+                let new_end = (self.heap.len() as i32) + bytes;
+                self.heap.resize(new_end as usize, 0);
+                self.next_16_bits();
+            }
             _ => {
                 return true;
             }
@@ -280,5 +288,14 @@ mod tests {
         vm.program = vec![10, 0, 1, 0];
         vm.run_once();
         assert_eq!(vm.equal_flag, true);
+    }
+
+    #[test]
+    fn test_aloc() {
+        let mut vm = VM::new();
+        vm.registers[0] = 1024;
+        vm.program = vec![17, 0, 0, 0];
+        vm.run_once();
+        assert_eq!(vm.heap.len(), 1024);
     }
 }
